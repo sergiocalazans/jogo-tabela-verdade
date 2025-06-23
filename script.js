@@ -51,15 +51,13 @@ function gerarQuestao(nivel) {
     // Uma nova estrutura condicional para tratar cada operação específica do nível "Médio".
     if (op === 'NOT_P OR Q') {
       expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de (NOT P) OR Q?`;
-      resultado = (!P) || Q; // O operador '!' significa NOT em JavaScript.
+      resultado = (!P) || Q; 
     } else if (op === 'P AND NOT Q') {
       expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P AND (NOT Q)?`;
       resultado = P && (!Q);
     } else if (op === 'P XOR Q') {
       expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P XOR Q?`;
-      // Ótima implementação do XOR (OU Exclusivo). Ele é verdadeiro se P OU Q for verdadeiro, mas não ambos.
-      // Dica: Em JavaScript, uma forma mais curta de escrever XOR é `P !== Q` (P é diferente de Q).
-      resultado = (P || Q) && !(P && Q); // XOR
+      resultado = P !== Q; // XOR
     }
 
   } else if (nivel === "Difícil") {
