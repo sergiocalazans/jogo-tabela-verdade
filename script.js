@@ -173,37 +173,52 @@ btnReiniciar.addEventListener('click', reiniciarJogo);
 
 
 // ===================================================================================
-// SEÇÃO 3: ANIMAÇÃO DE FUNDO (VERSÃO ATUALIZADA)
+// SEÇÃO 3: ANIMAÇÃO DE FUNDO (REESCRITA COM BASE NO SEU CÓDIGO)
 // ===================================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Cria o container para os símbolos
   const joysticksContainer = document.createElement("div");
   joysticksContainer.id = "joysticks-container";
   document.body.appendChild(joysticksContainer);
-  
-  const gameSymbols = ['🎮', '🕹️', '👾', '🚀', '🎲', '🤖'];
-  // Define quantos símbolos queremos na tela.
-  const numberOfSymbols = 30;
 
-  // Usa um loop 'for' para criar os símbolos uma única vez.
-  for (let i = 0; i < numberOfSymbols; i++) {
+  // Lista de símbolos que queremos usar
+  const gameSymbols = ['🎮', '🕹️', '👾', '🚀', '🎲', '🤖'];
+
+  // Função que cria um único símbolo caindo
+  function createGameSymbol() {
+    // Cria o elemento div para o símbolo
     const symbol = document.createElement("div");
     symbol.classList.add("game-symbol");
-    
-    // Escolhe um símbolo aleatório.
-    symbol.innerText = gameSymbols[Math.floor(Math.random() * gameSymbols.length)];
-    
-    // ATUALIZAÇÃO: Define a posição TOP e LEFT aleatoriamente para espalhar pela tela.
-    symbol.style.top = Math.random() * 100 + 'vh';
-    symbol.style.left = Math.random() * 100 + 'vw';
-    
-    // ATUALIZAÇÃO: Define um tamanho de fonte aleatório.
-    symbol.style.fontSize = Math.random() * 15 + 10 + "px";
-    
-    // ATUALIZAÇÃO: Define duração e atraso aleatórios para que eles pisquem fora de sincronia.
-    symbol.style.animationDuration = Math.random() * 5 + 5 + "s"; // Duração entre 5s e 10s
-    symbol.style.animationDelay = Math.random() * 5 + 's';      // Começa em momentos diferentes
 
+    // Escolhe um símbolo aleatório da lista
+    symbol.innerText = gameSymbols[Math.floor(Math.random() * gameSymbols.length)];
+
+    // Define uma posição HORIZONTAL aleatória
+    symbol.style.left = Math.random() * 100 + "vw";
+
+    // Define uma DURAÇÃO de animação aleatória (entre 5s e 12s)
+    symbol.style.animationDuration = Math.random() * 7 + 5 + "s";
+    
+    // CORREÇÃO: Adiciona um ATRASO de animação aleatório para que não caiam em fila
+    symbol.style.animationDelay = Math.random() * 5 + 's';
+
+    // Define um TAMANHO de fonte aleatório
+    symbol.style.fontSize = Math.random() * 20 + 10 + "px";
+
+    // Define uma OPACIDADE aleatória
+    symbol.style.opacity = Math.random() * 0.7 + 0.3;
+
+    // Adiciona o símbolo ao container
     joysticksContainer.appendChild(symbol);
+
+    // CORREÇÃO: Define um tempo para remover o elemento. 
+    // O tempo deve ser maior que a duração máxima da animação (12s) + o atraso máximo (5s)
+    setTimeout(() => {
+      symbol.remove();
+    }, 17000); // 17 segundos é um tempo seguro
   }
+
+  // A cada 300ms, chama a função para criar um novo símbolo
+  setInterval(createGameSymbol, 300);
 });
