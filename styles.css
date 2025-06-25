@@ -180,3 +180,34 @@ h2 {
         font-size: 1.8rem;
     }
 }
+
+/* --- Estilos para Animação de Fundo --- */
+
+#joysticks-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.game-symbol {
+  position: absolute;
+  animation: fadeInOut linear infinite;
+  user-select: none;
+  color: rgba(28, 44, 76, 0.5);
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

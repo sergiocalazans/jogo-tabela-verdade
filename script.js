@@ -177,30 +177,33 @@ btnReiniciar.addEventListener('click', reiniciarJogo);
 // ===================================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  const heartsContainer = document.createElement("div");
-  heartsContainer.id = "hearts-container";
-  document.body.appendChild(heartsContainer);
+  const joysticksContainer = document.createElement("div");
+  joysticksContainer.id = "joysticks-container";
+  document.body.appendChild(joysticksContainer);
+  
+  const gameSymbols = ['🎮', '🕹️', '👾', '🚀', '🎲', '🤖'];
+  // Define quantos símbolos queremos na tela.
+  const numberOfSymbols = 30;
 
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
+  // Usa um loop 'for' para criar os símbolos uma única vez.
+  for (let i = 0; i < numberOfSymbols; i++) {
+    const symbol = document.createElement("div");
+    symbol.classList.add("game-symbol");
+    
+    // Escolhe um símbolo aleatório.
+    symbol.innerText = gameSymbols[Math.floor(Math.random() * gameSymbols.length)];
+    
+    // ATUALIZAÇÃO: Define a posição TOP e LEFT aleatoriamente para espalhar pela tela.
+    symbol.style.top = Math.random() * 100 + 'vh';
+    symbol.style.left = Math.random() * 100 + 'vw';
+    
+    // ATUALIZAÇÃO: Define um tamanho de fonte aleatório.
+    symbol.style.fontSize = Math.random() * 15 + 10 + "px";
+    
+    // ATUALIZAÇÃO: Define duração e atraso aleatórios para que eles pisquem fora de sincronia.
+    symbol.style.animationDuration = Math.random() * 5 + 5 + "s"; // Duração entre 5s e 10s
+    symbol.style.animationDelay = Math.random() * 5 + 's';      // Começa em momentos diferentes
 
-    heart.innerText = '👾';
-
-    heart.style.left = Math.random() * 100 + "vw";
-
-    heart.style.animationDuration = Math.random() * 5 + 5 + "s";
-
-    heart.style.fontSize = Math.random() * 15 + 10 + "px";
-
-    heart.style.opacity = Math.random() * 0.7 + 0.3;
-
-    heartsContainer.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, 10000);
+    joysticksContainer.appendChild(symbol);
   }
-
-  setInterval(createHeart, 300);
 });
