@@ -1,0 +1,156 @@
+/* Configurações Globais e Variáveis de Cor */
+:root {
+    --cor-fundo: #cde1f7;
+    --cor-fundo-gradiente: linear-gradient(180deg, #a7c7e7 0%, #e6f0fa 100%);
+    --cor-texto-principal: #333;
+    --cor-borda-caixa: #000;
+    --cor-botao-facil: #28a745;
+    --cor-botao-medio: #ffc107;
+    --cor-botao-dificil: #dc3545;
+    --cor-botao-reiniciar: #17a2b8;
+    --cor-texto-botao: #ffffff;
+}
+
+/* Reset Básico e Estilo do Body */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--cor-fundo);
+    background-image: var(--cor-fundo-gradiente);
+    color: var(--cor-texto-principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Tipografia */
+.titulo {
+    font-family: 'VT323', monospace;
+    font-size: 4rem;
+    color: #1c2c4c;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Caixas de Conteúdo (Questão e Final) */
+.box-questao, .box-final {
+    background-color: white;
+    border: 3px solid var(--cor-borda-caixa);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#texto-questao {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.pontuacao {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+#mensagem-final {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+
+/* Estilos dos Botões */
+.btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 10px;
+    color: var(--cor-texto-botao);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.botoes-nivel {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-dificil { background-color: var(--cor-botao-dificil); }
+.btn-medio { background-color: var(--cor-botao-medio); color: #333; }
+.btn-facil { background-color: var(--cor-botao-facil); }
+.btn-reiniciar { background-color: var(--cor-botao-reiniciar); }
+
+.botoes-resposta {
+    margin-top: 20px;
+}
+
+.btn-resposta {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 2rem;
+}
+#btn-v { background-color: var(--cor-botao-facil); }
+#btn-f { background-color: var(--cor-botao-dificil); }
+
+/* Classe Utilitária para Esconder Elementos */
+.hide {
+    display: none;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .titulo {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .botoes-nivel {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 80%;
+        max-width: 250px;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .btn-resposta {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+}

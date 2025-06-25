@@ -4,8 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo Tabela Verdade</title>
+    
+    <!-- Importação de Fontes do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    
+    <!-- Link para o arquivo de estilos -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <main class="container">
+        <h1 class="titulo">JOGO TABELA VERDADE</h1>
+
+        <!-- Tela 1: Escolha de Nível -->
+        <section id="tela-inicial">
+            <h2>Escolha um nível para jogar</h2>
+            <div class="botoes-nivel">
+                <button class="btn btn-dificil" data-nivel="Difícil">Difícil</button>
+                <button class="btn btn-medio" data-nivel="Médio">Médio</button>
+                <button class="btn btn-facil" data-nivel="Fácil">Fácil</button>
+            </div>
+        </section>
+
+        <!-- Tela 2: Pergunta -->
+        <section id="tela-questao" class="hide">
+            <div class="box-questao">
+                <h3 id="numero-questao">Questão 1</h3>
+                <p id="texto-questao">Texto da questão</p>
+            </div>
+            <div class="botoes-resposta">
+                <button class="btn btn-resposta" id="btn-v" data-resposta="true">V</button>
+                <button class="btn btn-resposta" id="btn-f" data-resposta="false">F</button>
+            </div>
+        </section>
+
+        <!-- Tela 3: Pontuação Final -->
+        <section id="tela-final" class="hide">
+            <div class="box-final">
+                <h2>Pontuação Final</h2>
+                <p id="pontuacao-final" class="pontuacao">X/X</p>
+                <p id="mensagem-final">Texto de feedback</p>
+            </div>
+            <button class="btn btn-reiniciar" id="btn-reiniciar">Reiniciar</button>
+        </section>
+
+    </main>
+
+    <!-- Link para o arquivo JavaScript (no final do body) -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,111 +1,262 @@
-function valorAleatorio() {
-  // 1. Math.random() gera um número de ponto flutuante entre 0 (inclusivo) e 1 (exclusivo).
-  // 2. A condição `< 0.5` tem aproximadamente 50% de chance de ser verdadeira e 50% de ser falsa.
-  // 3. O resultado é um valor booleano (true ou false) retornado pela função.
-  return Math.random() < 0.5; // true ou false
-}
+// ===================================================================================
+// SEÇÃO 1: GERAÇÃO DE TODAS AS QUESTÕES POSSÍVEIS
+// Em vez de gerar uma questão aleatória a cada vez, vamos gerar TODAS as
+// combinações possíveis para cada nível. Isso garante que podemos selecionar
+// 5 questões únicas para cada partida.
+// ===================================================================================
 
+/**
+ * Converte um valor booleano (true/false) para a sua representação textual ('V'/'F').
+ * @param {boolean} v - O valor booleano a ser convertido.
+ * @returns {string} 'V' se a entrada for true, 'F' se for false.
+ */
 function boolParaTexto(v) {
-  // Esta função usa um operador ternário, que é uma forma compacta de um if-else.
-  // 1. `v ? 'V' : 'F'` significa: "Se a variável 'v' for verdadeira (true), retorne 'V'. Senão, retorne 'F'".
-  // 2. O objetivo é converter o resultado booleano (true/false) em um texto amigável ('V'/'F') para ser exibido ao usuário.
+  // Operador ternário: uma forma curta de if-else.
+  // Se 'v' for verdadeiro, retorna 'V'. Caso contrário, retorna 'F'.
   return v ? 'V' : 'F';
 }
 
-// Geração de questão
-function gerarQuestao(nivel) {
-  // Esta é a função principal. Ela recebe o 'nivel' como um argumento (string) e gera um objeto de desafio completo.
+/**
+ * Gera um objeto contendo arrays com todas as questões possíveis para cada nível.
+ * @returns {object} Um objeto com chaves 'Fácil', 'Médio', 'Difícil' e valores como arrays de questões.
+ */
+function gerarTodasAsQuestoes() {
+  // Array de valores booleanos para iterar sobre todas as possibilidades de P, Q e R.
+  const valores = [true, false];
+  // Objeto que irá armazenar todas as questões geradas.
+  const questoes = {
+    'Fácil': [],
+    'Médio': [],
+    'Difícil': []
+  };
 
-  // Gera valores aleatórios para as proposições P, Q e R no início da função.
-  // Mesmo que R não seja usado nos níveis "Fácil" e "Médio", ele já é gerado aqui. Isso não é um problema, apenas uma observação.
-  const P = valorAleatorio();
-  const Q = valorAleatorio();
-  const R = valorAleatorio();
-
-  // Inicializa as variáveis que irão armazenar o texto da questão e o resultado booleano.
-  // Elas serão preenchidas dentro dos blocos `if` abaixo.
-  let expressao = '';
-  let resultado = false;
-
-  // Inicia uma estrutura condicional para tratar cada nível de dificuldade.
-  if (nivel === "Fácil") {
-    // Para o nível "Fácil", escolhe aleatoriamente entre as operações 'AND' e 'OR'.
-    const op = Math.random() < 0.5 ? 'AND' : 'OR';
-    
-    // Usa "template literals" (crases ``) para construir a string da questão de forma dinâmica e legível.
-    // As funções `boolParaTexto` são chamadas para formatar os valores de P e Q.
-    expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P ${op} Q?`;
-    
-    // Calcula o resultado booleano. Se 'op' for 'AND', calcula (P && Q). Senão, calcula (P || Q).
-    resultado = op === 'AND' ? (P && Q) : (P || Q);
-  
-  } else if (nivel === "Médio") {
-    // Cria um array com as operações disponíveis para o nível "Médio".
-    const ops = ['NOT_P OR Q', 'P AND NOT Q', 'P XOR Q'];
-    
-    // Escolhe uma operação aleatória do array 'ops'.
-    // 1. `Math.random() * ops.length` gera um número entre 0 e 2.99...
-    // 2. `Math.floor()` arredonda para baixo, resultando em um índice válido (0, 1 ou 2).
-    const op = ops[Math.floor(Math.random() * ops.length)];
-
-    // Uma nova estrutura condicional para tratar cada operação específica do nível "Médio".
-    if (op === 'NOT_P OR Q') {
-      expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de (NOT P) OR Q?`;
-      resultado = (!P) || Q; 
-    } else if (op === 'P AND NOT Q') {
-      expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P AND (NOT Q)?`;
-      resultado = P && (!Q);
-    } else if (op === 'P XOR Q') {
-      expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P XOR Q?`;
-      resultado = P !== Q; // XOR
-    }
-
-  } else if (nivel === "Difícil") {
-    // Semelhante ao nível médio, define um array de operações para o nível "Difícil".
-    const ops = [
-      '(P AND Q) OR R',
-      'P -> Q',
-      'P <-> Q'
-    ];
-    const op = ops[Math.floor(Math.random() * ops.length)];
-
-    if (op === '(P AND Q) OR R') {
-      // Esta é a única operação que usa a variável R.
-      expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, R = ${boolParaTexto(R)}, qual o resultado de (P AND Q) OR R?`;
-      resultado = (P && Q) || R;
-    } else if (op === 'P -> Q') {
-      // Operador condicional (implicação).
-      expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P -> Q?`;
-      // A expressão "P implica Q" é logicamente equivalente a "(não P) ou Q". Sua implementação está perfeita.
-      resultado = (!P) || Q;
-    } else if (op === 'P <-> Q') {
-      // Operador bicondicional.
-      expressao = `P = ${boolParaTexto(P)}, Q = ${boolParaTexto(Q)}, qual o resultado de P <-> Q?`;
-      // O bicondicional é verdadeiro se, e somente se, P e Q têm o mesmo valor. O operador `===` (igualdade estrita) faz exatamente isso.
-      resultado = P === Q;
+  // --- NÍVEL FÁCIL ---
+  // Itera sobre cada valor possível de P (V, F).
+  for (const P of valores) {
+    // Itera sobre cada valor possível de Q (V, F).
+    for (const Q of valores) {
+      // AND: Cria a questão e a resposta para a operação P AND Q.
+      questoes['Fácil'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de P AND Q?`,
+        resposta: P && Q
+      });
+      // OR: Cria a questão e a resposta para a operação P OR Q.
+      questoes['Fácil'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de P OR Q?`,
+        resposta: P || Q
+      });
     }
   }
 
-  // Ao final da função, retorna um objeto JavaScript (dicionário) contendo os três itens solicitados.
-  return {
-    nivel: nivel,
-    questao: expressao,
-    resposta: resultado // A resposta já está no formato booleano (true/false).
-  };
+  // --- NÍVEL MÉDIO ---
+  for (const P of valores) {
+    for (const Q of valores) {
+      // (NOT P) OR Q
+      questoes['Médio'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de (NOT P) OR Q?`,
+        resposta: (!P) || Q
+      });
+      // P AND (NOT Q)
+      questoes['Médio'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de P AND (NOT Q)?`,
+        resposta: P && (!Q)
+      });
+      // P XOR Q (XOR é verdadeiro se P e Q forem diferentes)
+      questoes['Médio'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de P XOR Q?`,
+        resposta: P !== Q
+      });
+    }
+  }
+  
+  // --- NÍVEL DIFÍCIL ---
+  for (const P of valores) {
+    for (const Q of valores) {
+      // Implicação (P -> Q), que é logicamente equivalente a (!P || Q)
+      questoes['Difícil'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de P -> Q?`,
+        resposta: (!P) || Q
+      });
+      // Bicondicional (P <-> Q), que é verdadeiro se P e Q são iguais.
+      questoes['Difícil'].push({
+        questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, qual o resultado de P <-> Q?`,
+        resposta: P === Q
+      });
+
+      // Operação com 3 variáveis
+      for (const R of valores) {
+        // (P AND Q) OR R
+        questoes['Difícil'].push({
+          questao: `P=${boolParaTexto(P)}, Q=${boolParaTexto(Q)}, R=${boolParaTexto(R)}, qual o resultado de (P AND Q) OR R?`,
+          resposta: (P && Q) || R
+        });
+      }
+    }
+  }
+  // Retorna o objeto com todas as questões.
+  return questoes;
 }
 
-// Este bloco de código serve para testar e demonstrar a função `gerarQuestao`.
-
-// Exemplo: gerar 5 questões de nível médio
-// Um loop `for` que executa 5 vezes.
-for (let i = 0; i < 5; i++) {
-  // A cada iteração, chama a função `gerarQuestao` para criar um novo objeto de desafio do nível "Médio".
-  const questao = gerarQuestao("Médio");
-
-  // `console.log` é usado para imprimir as informações no console do navegador ou terminal.
-  // Ideal para depuração e testes.
-  console.log(`Questão ${i + 1}:`);
-  console.log(questao.questao); // Imprime o texto da questão.
-  console.log(`Resposta correta: ${boolParaTexto(questao.resposta)}`); // Imprime a resposta formatada como 'V' ou 'F'.
-  console.log('----------------------------'); // Adiciona uma linha para separar as questões.
+/**
+ * Embaralha os elementos de um array no lugar usando o algoritmo Fisher-Yates.
+ * @param {array} array - O array a ser embaralhado.
+ */
+function shuffleArray(array) {
+  // Itera do final do array para o início.
+  for (let i = array.length - 1; i > 0; i--) {
+    // Escolhe um índice aleatório entre 0 e i (inclusivo).
+    const j = Math.floor(Math.random() * (i + 1));
+    // Troca o elemento na posição i com o elemento na posição aleatória j.
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
+
+// ===================================================================================
+// SEÇÃO 2: LÓGICA DE CONTROLE DO JOGO
+// ===================================================================================
+
+// --- Seleção dos Elementos do DOM ---
+// Armazena referências aos elementos HTML para que não precisemos procurá-los toda hora.
+const telaInicial = document.getElementById('tela-inicial');
+const telaQuestao = document.getElementById('tela-questao');
+const telaFinal = document.getElementById('tela-final');
+
+const botoesNivel = document.querySelectorAll('.botoes-nivel .btn');
+const btnV = document.getElementById('btn-v');
+const btnF = document.getElementById('btn-f');
+const btnReiniciar = document.getElementById('btn-reiniciar');
+
+const numeroQuestaoEl = document.getElementById('numero-questao');
+const textoQuestaoEl = document.getElementById('texto-questao');
+const pontuacaoFinalEl = document.getElementById('pontuacao-final');
+const mensagemFinalEl = document.getElementById('mensagem-final');
+
+// --- Variáveis de Estado do Jogo ---
+// Armazenam o estado atual do jogo.
+const todasAsQuestoes = gerarTodasAsQuestoes(); // Gera todas as questões uma única vez.
+let listaDeQuestoes = []; // Armazenará as 5 questões selecionadas para a partida atual.
+let questaoAtual = {}; // O objeto da questão que está sendo exibida.
+let pontuacao = 0; // Pontuação do jogador.
+const totalQuestoes = 5; // O número de questões por partida agora é fixo em 5.
+let numeroDaQuestao = 0; // Contador para a questão atual (de 1 a 5).
+
+/**
+ * Inicia uma nova partida com o nível selecionado.
+ * @param {string} nivel - O nível escolhido pelo jogador ('Fácil', 'Médio', 'Difícil').
+ */
+function iniciarJogo(nivel) {
+  // Reseta as variáveis do jogo para uma nova partida.
+  pontuacao = 0;
+  numeroDaQuestao = 0;
+
+  // Pega a lista completa de questões para o nível escolhido.
+  const questoesDoNivel = todasAsQuestoes[nivel];
+  // Embaralha essa lista para garantir aleatoriedade a cada partida.
+  shuffleArray(questoesDoNivel);
+  // Seleciona as 5 primeiras questões da lista embaralhada.
+  listaDeQuestoes = questoesDoNivel.slice(0, totalQuestoes);
+  
+  // Controla a visibilidade das telas.
+  telaInicial.classList.add('hide'); // Esconde a tela inicial.
+  telaFinal.classList.add('hide'); // Garante que a tela final esteja escondida.
+  telaQuestao.classList.remove('hide'); // Mostra a tela de questões.
+
+  // Chama a função para exibir a primeira questão.
+  proximaQuestao();
+}
+
+/**
+ * Exibe a próxima questão da lista ou finaliza o jogo se todas as 5 foram respondidas.
+ */
+function proximaQuestao() {
+  // Verifica se o jogador já respondeu todas as 5 questões.
+  if (numeroDaQuestao >= totalQuestoes) {
+    // Se sim, chama a função para mostrar o resultado final.
+    mostrarTelaFinal();
+    return; // Encerra a execução da função aqui.
+  }
+
+  // Incrementa o contador do número da questão.
+  numeroDaQuestao++;
+  // Pega a próxima questão da nossa lista de 5 questões. (Lembre-se que arrays começam em 0).
+  questaoAtual = listaDeQuestoes[numeroDaQuestao - 1];
+
+  // Atualiza os elementos na tela com as informações da nova questão.
+  numeroQuestaoEl.textContent = `Questão ${numeroDaQuestao}`;
+  textoQuestaoEl.textContent = questaoAtual.questao;
+}
+
+/**
+ * Verifica se a resposta do usuário está correta e avança o jogo.
+ * @param {boolean} respostaUsuario - A resposta do usuário (true para 'V', false para 'F').
+ */
+function verificarResposta(respostaUsuario) {
+  // Compara a resposta do usuário com a resposta correta armazenada no objeto da questão.
+  const correta = questaoAtual.resposta;
+  
+  // Se a resposta do usuário for igual à resposta correta...
+  if (respostaUsuario === correta) {
+    // ...incrementa a pontuação.
+    pontuacao++;
+  }
+  
+  // Chama a próxima questão após um pequeno intervalo para o usuário perceber a transição.
+  setTimeout(proximaQuestao, 200); 
+}
+
+/**
+ * Exibe a tela de pontuação final com os resultados da partida.
+ */
+function mostrarTelaFinal() {
+  // Esconde a tela de questões e mostra a tela final.
+  telaQuestao.classList.add('hide');
+  telaFinal.classList.remove('hide');
+
+  // Exibe a pontuação final no formato "acertos / total".
+  pontuacaoFinalEl.textContent = `${pontuacao} / ${totalQuestoes}`;
+
+  // Calcula o percentual de acertos.
+  const aproveitamento = (pontuacao / totalQuestoes);
+  let mensagem = '';
+  
+  // Define uma mensagem de feedback baseada na performance do jogador.
+  if (aproveitamento >= 0.9) { // 90% ou mais (5 acertos)
+    mensagem = "Você é o mestre da lógica!";
+  } else if (aproveitamento >= 0.6) { // 60% a 80% (3 ou 4 acertos)
+    mensagem = "Você vai bem em lógica!";
+  } else { // Menos de 60% (0, 1 ou 2 acertos)
+    mensagem = "Você precisa estudar lógica!";
+  }
+  // Exibe a mensagem de feedback na tela.
+  mensagemFinalEl.textContent = mensagem;
+}
+
+/**
+ * Reinicia o jogo, voltando para a tela de seleção de nível.
+ */
+function reiniciarJogo() {
+  // Esconde a tela final e mostra a tela inicial.
+  telaFinal.classList.add('hide');
+  telaInicial.classList.remove('hide');
+}
+
+// --- Adicionar "Ouvintes" de Eventos (Event Listeners) ---
+// Conecta as funções JavaScript aos cliques nos botões.
+
+// Para cada botão de nível...
+botoesNivel.forEach(botao => {
+  // ...adiciona um evento de clique.
+  botao.addEventListener('click', () => {
+    // Pega o nível do atributo 'data-nivel' do botão.
+    const nivel = botao.dataset.nivel;
+    // Chama a função para iniciar o jogo com esse nível.
+    iniciarJogo(nivel);
+  });
+});
+
+// Adiciona um evento de clique ao botão 'V' para verificar a resposta 'true'.
+btnV.addEventListener('click', () => verificarResposta(true));
+// Adiciona um evento de clique ao botão 'F' para verificar a resposta 'false'.
+btnF.addEventListener('click', () => verificarResposta(false));
+// Adiciona um evento de clique ao botão 'Reiniciar' para chamar a função de reinício.
+btnReiniciar.addEventListener('click', reiniciarJogo);
