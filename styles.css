@@ -181,7 +181,7 @@ h2 {
     }
 }
 
-/* --- Estilos para Animação de Fundo --- */
+/* --- Estilos para Animação de Fundo (Versão Queda Contínua) --- */
 
 #joysticks-container {
   position: fixed;
@@ -196,18 +196,20 @@ h2 {
 
 .game-symbol {
   position: absolute;
-  animation: fadeInOut linear infinite;
+  /* Aplica a animação 'fall' e garante que o elemento permaneça no estado final (forwards) */
+  animation: fall linear forwards;
   user-select: none;
-  color: rgba(28, 44, 76, 0.5);
+  color: rgba(28, 44, 76, 0.7); /* Deixei um pouco menos transparente */
 }
 
-@keyframes fadeInOut {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0.8);
+/* Animação de queda que será usada pelo JS */
+@keyframes fall {
+  from {
+    /* Começa um pouco acima da tela */
+    transform: translateY(-10vh);
   }
-  50% {
-    opacity: 1;
-    transform: scale(1);
+  to {
+    /* Termina um pouco abaixo da tela para garantir que desapareça completamente */
+    transform: translateY(110vh);
   }
 }
