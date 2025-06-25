@@ -11,11 +11,18 @@
     --cor-texto-botao: #ffffff;
 }
 
-/* Reset Básico e Estilo do Body */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    /* Garante que o body ocupe toda a altura */
+    overflow: hidden;
+    /* A correção principal: impede a criação de barras de rolagem */
 }
 
 body {
@@ -42,7 +49,7 @@ body {
     font-size: 4rem;
     color: #1c2c4c;
     margin-bottom: 40px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -51,7 +58,8 @@ h2 {
 }
 
 /* Caixas de Conteúdo (Questão e Final) */
-.box-questao, .box-final {
+.box-questao,
+.box-final {
     background-color: white;
     border: 3px solid var(--cor-borda-caixa);
     border-radius: 20px;
@@ -93,7 +101,7 @@ h2 {
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .botoes-nivel {
@@ -102,10 +110,22 @@ h2 {
     flex-wrap: wrap;
 }
 
-.btn-dificil { background-color: var(--cor-botao-dificil); }
-.btn-medio { background-color: var(--cor-botao-medio); color: #333; }
-.btn-facil { background-color: var(--cor-botao-facil); }
-.btn-reiniciar { background-color: var(--cor-botao-reiniciar); }
+.btn-dificil {
+    background-color: var(--cor-botao-dificil);
+}
+
+.btn-medio {
+    background-color: var(--cor-botao-medio);
+    color: #333;
+}
+
+.btn-facil {
+    background-color: var(--cor-botao-facil);
+}
+
+.btn-reiniciar {
+    background-color: var(--cor-botao-reiniciar);
+}
 
 .botoes-resposta {
     margin-top: 20px;
@@ -117,8 +137,14 @@ h2 {
     border-radius: 50%;
     font-size: 2rem;
 }
-#btn-v { background-color: var(--cor-botao-facil); }
-#btn-f { background-color: var(--cor-botao-dificil); }
+
+#btn-v {
+    background-color: var(--cor-botao-facil);
+}
+
+#btn-f {
+    background-color: var(--cor-botao-dificil);
+}
 
 /* Classe Utilitária para Esconder Elementos */
 .hide {
