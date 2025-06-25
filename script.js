@@ -260,3 +260,56 @@ btnV.addEventListener('click', () => verificarResposta(true));
 btnF.addEventListener('click', () => verificarResposta(false));
 // Adiciona um evento de clique ao botão 'Reiniciar' para chamar a função de reinício.
 btnReiniciar.addEventListener('click', reiniciarJogo);
+
+// ===================================================================================
+// SEÇÃO 3: ANIMAÇÃO DE FUNDO
+// ===================================================================================
+
+// Espera o conteúdo da página carregar completamente antes de executar o script de animação.
+document.addEventListener("DOMContentLoaded", () => {
+  // Cria um elemento <div> para servir de container para todos os símbolos animados.
+  const joysticksContainer = document.createElement("div");
+  // Define um ID para que possamos estilizá-lo com CSS.
+  joysticksContainer.id = "joysticks-container";
+  // Adiciona o container ao corpo (body) do documento.
+  document.body.appendChild(joysticksContainer);
+
+  // Define uma lista de emojis relacionados a jogos para variar a animação.
+  const gameSymbols = ['🎮', '🕹️', '👾', '🚀', '🎲', '🤖'];
+
+  // Função que cria e anima um único símbolo.
+  function createGameSymbol() {
+    // Cria o elemento <div> que será o nosso símbolo.
+    const symbol = document.createElement("div");
+    // Adiciona uma classe para que possamos aplicar a animação de queda via CSS.
+    symbol.classList.add("game-symbol");
+
+    // Escolhe um emoji aleatório da nossa lista e o define como conteúdo do elemento.
+    symbol.innerText = gameSymbols[Math.floor(Math.random() * gameSymbols.length)];
+
+    // Define uma posição horizontal aleatória (de 0 a 100% da largura da tela).
+    symbol.style.left = Math.random() * 100 + "vw";
+
+    // Define uma duração de animação aleatória (entre 5 e 12 segundos) para que os símbolos caiam em velocidades diferentes.
+    symbol.style.animationDuration = Math.random() * 7 + 5 + "s";
+
+    // Define um tamanho de fonte aleatório (entre 10px e 30px).
+    symbol.style.fontSize = Math.random() * 20 + 10 + "px";
+
+    // Define uma opacidade aleatória para dar uma sensação de profundidade.
+    symbol.style.opacity = Math.random() * 0.7 + 0.3;
+
+    // Adiciona o símbolo recém-criado ao container.
+    joysticksContainer.appendChild(symbol);
+
+    // Define um temporizador para remover o símbolo do DOM após 12 segundos.
+    // Isso é crucial para não sobrecarregar a página com milhares de elementos.
+    setTimeout(() => {
+      symbol.remove();
+    }, 12000);
+  }
+
+  // Define um intervalo para chamar a função createGameSymbol a cada 300 milissegundos.
+  // Isso controla a "densidade" de símbolos caindo na tela.
+  setInterval(createGameSymbol, 300);
+});
