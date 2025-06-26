@@ -260,7 +260,7 @@ btnReiniciar.addEventListener('click', reiniciarJogo);
 
 
 // ===================================================================================
-// SEÇÃO 3: ANIMAÇÃO DE FUNDO (REESCRITA COM BASE NO SEU CÓDIGO)
+// SEÇÃO 3: ANIMAÇÃO DE FUNDO 
 // ===================================================================================
 
 // Garante que o código de animação só será executado após o carregamento completo do DOM.
