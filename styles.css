@@ -20,9 +20,7 @@
 html,
 body {
     height: 100%;
-    /* Garante que o body ocupe toda a altura */
     overflow: hidden;
-    /* A correção principal: impede a criação de barras de rolagem */
 }
 
 body {
