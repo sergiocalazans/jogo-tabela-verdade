@@ -6,7 +6,7 @@ Este projeto é um jogo interativo desenvolvido para a disciplina de **Resoluç�
 
 O projeto está disponível online e pode ser acessado diretamente pelo seu navegador.
 
-**[➡️ Clique aqui para jogar! ⬅️]([https://seu-link-do-vercel.vercel.app](https://jogo-tabela-verdade-eta.vercel.app/))**
+**[➡️ Clique aqui para jogar!](https://jogo-tabela-verdade-eta.vercel.app/)**
 
 ## 📜 Sobre o Projeto
 
