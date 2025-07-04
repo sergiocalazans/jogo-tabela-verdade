@@ -6,7 +6,7 @@ Este projeto é um jogo interativo desenvolvido para a disciplina de **Resoluç�
 
 O projeto está disponível online e pode ser acessado diretamente pelo seu navegador.
 
-**[➡️ Clique aqui para jogar! ⬅️]([https://seu-link-do-vercel.vercel.app](https://jogo-tabela-verdade-eta.vercel.app/))**
+**[➡️ Clique aqui para jogar!](https://jogo-tabela-verdade-eta.vercel.app/)**
 
 ## 📜 Sobre o Projeto
 
@@ -67,7 +67,7 @@ Se você deseja executar o projeto localmente para fins de desenvolvimento:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/sergiocalazans/jogo-tabela-verdade.git
     ```
 2.  **Navegue até a pasta do projeto:**
     ```bash
